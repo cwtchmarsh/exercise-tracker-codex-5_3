@@ -8,7 +8,13 @@ export function formatDateInput(date) {
     return `${year}-${month}-${day}`;
 }
 export function parseDate(dateString) {
-    const [year, month, day] = dateString.split("-").map((part) => Number(part));
+    const parts = dateString.split("-");
+    const yearRaw = Number(parts[0] ?? Number.NaN);
+    const monthRaw = Number(parts[1] ?? Number.NaN);
+    const dayRaw = Number(parts[2] ?? Number.NaN);
+    const year = Number.isFinite(yearRaw) ? yearRaw : 1970;
+    const month = Number.isFinite(monthRaw) ? monthRaw : 1;
+    const day = Number.isFinite(dayRaw) ? dayRaw : 1;
     return new Date(year, month - 1, day);
 }
 export function toReadableDate(dateString) {

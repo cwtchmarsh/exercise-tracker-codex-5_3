@@ -126,7 +126,7 @@ export class LogForm {
 
     const errors = validateDailyLog(log);
     if (errors.length > 0) {
-      this.setStatus(errors[0], false);
+      this.setStatus(errors[0] ?? "Validation failed.", false);
       return;
     }
 

@@ -162,8 +162,14 @@ export class SummaryService {
     let current = 1;
 
     for (let i = 1; i < uniqueSorted.length; i += 1) {
-      const previous = parseDate(uniqueSorted[i - 1]);
-      const currentDate = parseDate(uniqueSorted[i]);
+      const previousDateString = uniqueSorted[i - 1];
+      const currentDateString = uniqueSorted[i];
+      if (!previousDateString || !currentDateString) {
+        continue;
+      }
+
+      const previous = parseDate(previousDateString);
+      const currentDate = parseDate(currentDateString);
 
       previous.setDate(previous.getDate() + 1);
       if (previous.toDateString() === currentDate.toDateString()) {
@@ -182,7 +188,12 @@ export class SummaryService {
       return 0;
     }
 
-    const latestDate = parseDate(logs[logs.length - 1].date);
+    const latestLog = logs[logs.length - 1];
+    if (!latestLog) {
+      return 0;
+    }
+
+    const latestDate = parseDate(latestLog.date);
     const currentWeekStart = startOfWeek(latestDate);
     const previousWeekStart = new Date(currentWeekStart);
     previousWeekStart.setDate(previousWeekStart.getDate() - 7);
